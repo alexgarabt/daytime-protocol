@@ -9,9 +9,11 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <errno.h>
+#include <unistd.h>
+
+#define DEFAULT_DAYTIME_PORT 13
 
 const char *MSG_ERROR = "Error execution command: ./server [-p port]\nOptional argument [-p port] where port is valid port number, where it will wait for request of the service.";
-const uint16_t DEFAULT_DAYTIME_PORT = 13;
 const int RECV_BUFF_LEN = 1024; // 1KB
 const int DATE_BUFF_LEN = 30; // Maximum length of the date string
 
@@ -54,6 +56,7 @@ int main(int argc, char **argv) {
     int server_socket = socket(AF_INET, SOCK_DGRAM, 0);
     if (server_socket < 0) {
         perror("socket()");
+		close(server_socket);
         exit(EXIT_FAILURE);
     }
 
@@ -65,11 +68,12 @@ int main(int argc, char **argv) {
 
     if (bind(server_socket, (struct sockaddr *)&host_addr, sizeof(host_addr)) < 0) {
         perror("bind()");
+		close(server_socket);
         exit(EXIT_FAILURE);
     }
 
     // Start receiving data
-    printf("Daytime UDP server (localhost) listening on port %u\n", port);
+    printf("Daytime UDP server (127.0.0.1) listening on port %u\n\n", port);
 
     struct sockaddr_in client_addr;
     socklen_t client_len = sizeof(client_addr);
@@ -98,6 +102,7 @@ int main(int argc, char **argv) {
         int sys_result = system("date > /tmp/date_tmp.txt");
         if (sys_result == -1) {
             perror("system()");
+		    close(server_socket);
             exit(EXIT_FAILURE);
         }
 
@@ -105,6 +110,7 @@ int main(int argc, char **argv) {
         fd = fopen("/tmp/date_tmp.txt", "r");
         if (fd == NULL) {
             perror("Error opening temporary file");
+			close(server_socket);
             exit(EXIT_FAILURE);
         }
 
@@ -113,6 +119,7 @@ int main(int argc, char **argv) {
         if (fgets(date_buffer, DATE_BUFF_LEN, fd) == NULL) {
             perror("Error reading from temporary date file");
             fclose(fd);
+			close(server_socket);
             exit(EXIT_FAILURE);
         }
 
@@ -124,7 +131,7 @@ int main(int argc, char **argv) {
         if (sent_data_len < 0) {
             perror("sendto()");
         } else {
-            printf(">>> Sent current time to ==> %s:%u\n", client_ip, client_port);
+            printf(">>> Sent current time to ==> %s:%u\n\n", client_ip, client_port);
         }
 
         // Free memory for date buffer
@@ -132,6 +139,7 @@ int main(int argc, char **argv) {
 		fflush(stdout);
     }
 
+	close(server_socket);
     exit(EXIT_SUCCESS);
 }
 

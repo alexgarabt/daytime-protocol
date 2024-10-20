@@ -45,5 +45,5 @@ Normal UDP client that send a datagram (data information is not relevant) to the
 ### Output
 The output have no specific syntax.
 ```
- Tuesday, February 22, 1982 17:37:43-PST
+ Response from server: Tuesday, February 22, 1982 17:37:43-PST
 ```
