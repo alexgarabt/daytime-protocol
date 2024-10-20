@@ -20,11 +20,12 @@ If no port is specified it will get the default by the system to the daytime pro
 
 #### Output
 ```
-Daytime service ready on port $port
+Daytime UDP server (localhost) listening on $port 
 ```
 Prints in the console the addrs that solicitate the service.
 ```
-Service request: ip_addr port_addr
+> Received request from ==> ip_addr:port_addr
+>>> Sent current time to ==> ip_addr:port_addr
 ```
 
 ### Stop
