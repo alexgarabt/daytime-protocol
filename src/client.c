@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
     buffer_response[recv_len] = '\0'; 
 
     // Print the server response
-    printf("Received from server: %s\n", buffer_response);
+    printf("Response from server: %s\n", buffer_response);
 
     // Close the socket
     close(client_socket);

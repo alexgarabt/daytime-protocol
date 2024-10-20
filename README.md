@@ -14,7 +14,7 @@ When a datagram is received (data in the datagram is ignored) => Anwers with a d
 
 ### Execution
 ```
-./server [-p port]
+$./server [-p port]
 ```
 If no port is specified it will get the default by the system to the daytime protocol.
 
@@ -39,7 +39,7 @@ Normal UDP client that send a datagram (data information is not relevant) to the
 
 ### Execution
 ```
-./client server_addr [-p server_port]
+$./client server_addr [-p server_port]
 ```
 
 ### Output
@@ -47,3 +47,11 @@ The output have no specific syntax.
 ```
  Response from server: Tuesday, February 22, 1982 17:37:43-PST
 ```
+
+## Build & Debug & Clean binaries
+`Makefile` file contains the necessary commands to build the project binaries files will fall under `bin/` directory
+```
+$make all
+```
+`make clean` to remove the binaries  
+`make debug` to build the binaries to debug them with gdb

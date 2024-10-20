@@ -1,7 +1,7 @@
 # Compiler and flags
 CC = gcc
 FLAGS = -O3 -Wall
-DEBUG_FLAGS = -g  # Add debug flag for debugging
+DEBUG_FLAGS = -ggdb -Wall # Add debug flag for debugging
 SRC = src/
 OUT = bin/
 
@@ -38,4 +38,4 @@ clean:
 
 # Build with debug information
 debug: FLAGS := $(DEBUG_FLAGS)  # Overwrite FLAGS with debug flags
-debug: clean all  # Rebuild everything in debug mode
+debug: clean all # Rebuild everything in debug mode
