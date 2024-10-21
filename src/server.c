@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
         printf("> Received request from ==> %s:%u\n", client_ip, client_port);
 
         // Use system() call => date
-        int sys_result = system("date > /tmp/date_tmp.txt");
+        int sys_result = system("date > tmp/date_tmp.txt");
         if (sys_result == -1) {
             perror("system()");
 		    close(server_socket);
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
         }
 
         // Open the file and read the data
-        fd = fopen("/tmp/date_tmp.txt", "r");
+        fd = fopen("tmp/date_tmp.txt", "r");
         if (fd == NULL) {
             perror("Error opening temporary file");
 			close(server_socket);
